@@ -11,5 +11,7 @@ namespace Sklep.Database
     {
         public DbSet<Artykul> Artykul { get; set; }
         public DbSet<Transakcja> Transkacja { get; set; }
+
+        //public System.Data.Entity.DbSet<Sklep.Models.Plik> Pliks { get; set; }
     }
 }

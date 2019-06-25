@@ -5,15 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Tworzenie nowego towaru</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Artykuly", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-        <h4>Artykul</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -51,13 +50,13 @@
 
         <div class="form-group">
             <div class="col-md-10">
-
+                @Html.TextBoxFor(m => m.Plik, new { type = "file" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Stwórz" class="btn btn-secondary" />
             </div>
         </div>
     </div>

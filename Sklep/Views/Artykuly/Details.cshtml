@@ -5,9 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<button type="button" class="btn btn-secondary">
-    @Html.ActionLink("Wróć", "Index")
-</button>
+
+
+<input type="button" class="btn btn-secondary my-2 my-sm-0" value="Wróć" onclick="location.href='@Url.Action("Index")'" />
+
 
 <h1 align="center">@Html.DisplayFor(model => model.Nazwa)</h1>
 
@@ -16,7 +17,14 @@
     <dl class="dl-horizontal">
 
         <h2 align="center">
-            @Html.DisplayFor(model => model.Zdjecie)
+            @if (Model.Zdjecie != null)
+            {
+                <img src="data:image;base64,@Convert.ToBase64String(Model.Zdjecie)" />
+            }
+            else
+            {
+                <img src="/Pliki/image_404.png" alt="" />
+            }
         </h2>
 
         <h3 align="center">
@@ -41,18 +49,19 @@
 <div style="width: 100%;
   display: flex;
   justify-content: center;">
-<button type="button" algin="center" class="btn btn-secondary">
-    <h3>
-        @Html.ActionLink(
-    linkText: "Zamów",
-    actionName: "Create",
-    controllerName: "Transakcje",
-    routeValues: new {
-    id = Model.Id_towaru
-    },
-    htmlAttributes: null
-    )
-    </h3>
-</button>
+    <button type="button" algin="center" class="btn btn-secondary">
+        <h3>
+            @Html.ActionLink(
+        linkText: "Zamów",
+        actionName: "Create",
+        controllerName: "Transakcje",
+        routeValues: new {
+        id = Model.Id_towaru
+        },
+        htmlAttributes: null
+        )
+        </h3>
+
+    </button>
 </div>
 

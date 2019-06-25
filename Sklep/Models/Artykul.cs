@@ -10,7 +10,7 @@ namespace Sklep.Models
 {
     public class Artykul
     {
-       [Key]
+        [Key]
         public int Id_towaru { get; set; }
         [DisplayName("Nazwa towaru")]
         public string Nazwa { get; set; }
@@ -22,6 +22,8 @@ namespace Sklep.Models
         [DisplayName("Zdjęcie")]
         public byte[] Zdjecie { get; set; }
 
+        [NotMapped]
+        public HttpPostedFileBase Plik { get; set;}
         public virtual ICollection<Transakcja> Transakcje { get; set; }
     }
     public enum jednostka { szt, kg, g }

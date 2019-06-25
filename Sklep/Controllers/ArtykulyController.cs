@@ -34,6 +34,9 @@ namespace Sklep.Controllers
             {
                 return HttpNotFound();
             }
+            
+            //ViewBag.Base64String = "data:image/jpg;base64," + Convert.ToBase64String(artykul.Zdjecie);
+
             return View(artykul);
         }
 
@@ -48,22 +51,47 @@ namespace Sklep.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id_towaru,Nazwa,Ilosc,Jednostka,Opis,Zdjecie")] Artykul artykul)
+        public ActionResult Create([Bind(Include = "Id_towaru,Nazwa,Ilosc,Jednostka,Opis,Zdjecie,Plik")] Artykul artykul)
         {
             
             if (ModelState.IsValid)
             {
-                /*
-                if (artykul.Plik.FileName == null)
-                {
-                    throw new HttpException(404, "error");
-                } else { ViewBag.Error = artykul.Plik.FileName;}
-                */
 
-                db.Artykul.Add(artykul);
+                Artykul art = new Artykul();
+
+                art.Id_towaru = artykul.Id_towaru;
+                art.Nazwa = artykul.Nazwa;
+                art.Ilosc = artykul.Ilosc;
+                art.Jednostka = artykul.Jednostka;
+                art.Opis = artykul.Opis;
+
+                byte[] bytes;
+                //throw new HttpException(404, "error");
+                if (artykul.Plik != null && artykul.Plik.ContentLength > 0)
+                {
+                    
+                    using (BinaryReader br = new BinaryReader(artykul.Plik.InputStream))
+                    {
+                        bytes = br.ReadBytes(artykul.Plik.ContentLength);
+                    }
+                    art.Zdjecie = bytes;
+                }
+               
+                
+
+                db.Artykul.Add(art);
                 db.SaveChanges();
                 return RedirectToAction("Index");
 
+
+                /*
+               if (artykul.Plik != null && artykul.Plik.ContentLength > 0)
+               {
+                   var fileName = Path.GetFileName(artykul.Plik.FileName);
+                   var path = Path.Combine(Server.MapPath("~/Pliki/"), fileName);
+                   artykul.Plik.SaveAs(path);
+               }
+               */
                 /*
             
 
