@@ -22,8 +22,9 @@ namespace Sklep.Models
         [DisplayName("Zdjęcie")]
         public byte[] Zdjecie { get; set; }
 
-
         public virtual ICollection<Transakcja> Transakcje { get; set; }
     }
     public enum jednostka { szt, kg, g }
+
 }
+

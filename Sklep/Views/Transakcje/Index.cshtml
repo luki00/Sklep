@@ -13,6 +13,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Potwierdzono)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Artykul.Nazwa)
         </th>
         <th>
@@ -21,30 +24,29 @@
         <th>
             @Html.DisplayNameFor(model => model.Utworzono)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Potwierdzono)
-        </th>
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Potwierdzono)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Artykul.Nazwa)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Ilosc)
+            @Html.DisplayFor(modelItem => item.Ilosc) @Html.DisplayFor(modelItem => item.Artykul.Jednostka)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Utworzono)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Potwierdzono)
-        </td>
-        <td>
-            @Html.ActionLink("Potwierdź", "Edit", new { id=item.ID_transakcji }) |
-            @Html.ActionLink("Wyświetl", "Details", new { id=item.ID_transakcji }) |
-            @Html.ActionLink("Anuluj", "Delete", new { id=item.ID_transakcji })
+            @Html.ActionLink("Potwierdź", "Edit", new { id = item.ID_transakcji }) |
+            @Html.ActionLink("Wyświetl", "Details", new { id = item.ID_transakcji }) |
+            @Html.ActionLink("Anuluj", "Delete", new { id = item.ID_transakcji })
         </td>
     </tr>
 }
