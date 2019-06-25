@@ -1,0 +1,51 @@
+﻿@model Sklep.Models.Transakcja
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Transakcja</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Artykul.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Artykul.Nazwa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ilosc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ilosc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Utworzono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Utworzono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Potwierdzono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Potwierdzono)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_transakcji }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

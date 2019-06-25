@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Sklep.Models.Transakcja>
+
+@{
+    ViewBag.Title = "Koszyk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Artykul.Nazwa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ilosc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Utworzono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Potwierdzono)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Artykul.Nazwa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ilosc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Utworzono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Potwierdzono)
+        </td>
+        <td>
+            @Html.ActionLink("Potwierdź", "Edit", new { id=item.ID_transakcji }) |
+            @Html.ActionLink("Wyświetl", "Details", new { id=item.ID_transakcji }) |
+            @Html.ActionLink("Anuluj", "Delete", new { id=item.ID_transakcji })
+        </td>
+    </tr>
+}
+
+</table>

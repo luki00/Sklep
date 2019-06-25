@@ -1,0 +1,73 @@
+﻿@model Sklep.Models.Transakcja
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Anuluj</h2>
+@if (ViewBag.Potwierdzono)
+{
+
+    <h3>Nie można anulować transakcji, ponieważ została ona potwierdzona.</h3>
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+else
+{
+    <h3>Czy napewno chcesz anulować transakcję?</h3>
+    <div>
+        <h4>Transakcja</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Artykul.Nazwa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Artykul.Nazwa)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ilosc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ilosc)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Utworzono)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Utworzono)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Potwierdzono)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Potwierdzono)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+
+        }
+
+
+    </div>
+
+}

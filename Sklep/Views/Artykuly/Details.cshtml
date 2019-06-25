@@ -1,0 +1,67 @@
+﻿@model Sklep.Models.Artykul
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Artykul</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ilosc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ilosc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jednostka)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jednostka)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Opis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zdjecie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zdjecie)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(
+    linkText: "Zamów",
+    actionName: "Create",
+    controllerName: "Transakcje",
+    routeValues: new {
+        id = Model.Id_towaru
+    },
+    htmlAttributes: null
+    )|
+    @Html.ActionLink("Wróć", "Index")
+</p>
