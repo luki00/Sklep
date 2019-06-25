@@ -5,63 +5,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<button type="button" class="btn btn-secondary">
+    @Html.ActionLink("Wróć", "Index")
+</button>
+
+<h1 align="center">@Html.DisplayFor(model => model.Nazwa)</h1>
 
 <div>
-    <h4>Artykul</h4>
-    <hr />
+
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nazwa)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nazwa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ilosc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ilosc)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Jednostka)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Jednostka)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Opis)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Opis)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Zdjecie)
-        </dt>
-
-        <dd>
+        <h2 align="center">
             @Html.DisplayFor(model => model.Zdjecie)
+        </h2>
+
+        <h3 align="center">
+
+            @Html.DisplayFor(model => model.Opis)
+
+        </h3>
+
+        <dt>
+            Dostępna ilosć:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ilosc) @Html.DisplayFor(model => model.Jednostka)
         </dd>
+
+
+
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink(
+<div style="width: 100%;
+  display: flex;
+  justify-content: center;">
+<button type="button" algin="center" class="btn btn-secondary">
+    <h3>
+        @Html.ActionLink(
     linkText: "Zamów",
     actionName: "Create",
     controllerName: "Transakcje",
     routeValues: new {
-        id = Model.Id_towaru
+    id = Model.Id_towaru
     },
     htmlAttributes: null
-    )|
-    @Html.ActionLink("Wróć", "Index")
-</p>
+    )
+    </h3>
+</button>
+</div>
+

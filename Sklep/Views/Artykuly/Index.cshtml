@@ -5,52 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Artykuły</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nazwa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ilosc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Jednostka)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Opis)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Zdjecie)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </th>
+
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Nazwa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ilosc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Jednostka)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Opis)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Zdjecie)
         </td>
         <td>
-            @Html.ActionLink("Wyświetl", "Details", new { id = item.Id_towaru })
+            @Html.DisplayFor(modelItem => item.Nazwa)
+        </td>
+
+        <td>
+            <button type="button" class="btn btn-default">
+                @Html.ActionLink("Wyświetl", "Details", new { id = item.Id_towaru })
+            </button>
         </td>
     </tr>
 }
 
 </table>
+<button type="button" align="right" class="btn btn-default">
+    @Html.ActionLink("Stwórz nowy produkt", "Create")
+</button>
