@@ -9,33 +9,41 @@ using System.Web;
 using System.Web.Mvc;
 using Sklep.Database;
 using Sklep.Models;
+using Sklep.Repos;
+using Sklep.ViewModels;
 
 namespace Sklep.Controllers
 {
     public class ArtykulyController : Controller
     {
         private Context db = new Context();
+        IArtykulyRepo artykulyRepo;
+
+        public ArtykulyController()
+        {
+            artykulyRepo = new ArtykulyRepo();
+        }
 
         // GET: Artykuly
         public ActionResult Index()
         {
-            return View(db.Artykul.ToList());
+            return View(artykulyRepo.GetArtykulyList());
         }
 
         // GET: Artykuly/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Artykul artykul = db.Artykul.Find(id);
+            ArtykulyListViewModel artykul = artykulyRepo.GetArtykulyDetails(id);
             if (artykul == null)
             {
                 return HttpNotFound();
             }
             
-            //ViewBag.Base64String = "data:image/jpg;base64," + Convert.ToBase64String(artykul.Zdjecie);
+
 
             return View(artykul);
         }
@@ -57,77 +65,43 @@ namespace Sklep.Controllers
             if (ModelState.IsValid)
             {
 
-                Artykul art = new Artykul();
+                artykulyRepo.SetArtykulyItem(artykul.Id_towaru,artykul.Nazwa,artykul.Opis,artykul.Ilosc,artykul.Jednostka,artykul.Plik);
 
-                art.Id_towaru = artykul.Id_towaru;
-                art.Nazwa = artykul.Nazwa;
-                art.Ilosc = artykul.Ilosc;
-                art.Jednostka = artykul.Jednostka;
-                art.Opis = artykul.Opis;
-
-                byte[] bytes;
-                //throw new HttpException(404, "error");
-                if (artykul.Plik != null && artykul.Plik.ContentLength > 0)
-                {
-                    
-                    using (BinaryReader br = new BinaryReader(artykul.Plik.InputStream))
-                    {
-                        bytes = br.ReadBytes(artykul.Plik.ContentLength);
-                    }
-                    art.Zdjecie = bytes;
-                }
-               
-                
-
-                db.Artykul.Add(art);
-                db.SaveChanges();
                 return RedirectToAction("Index");
 
 
                 /*
-               if (artykul.Plik != null && artykul.Plik.ContentLength > 0)
+                 [Bind(Include = "Id,Name,Describtion,Quantity,Unit,Photo")] ArtykulyGetViewModel artykul
+                 
+                 artykulyRepo.SetArtykulyItem(artykul.Id,artykul.Name,artykul.Describtion,artykul.Quantity,artykul.Unit,artykul.Photo);   
+            
+            if (artykul.Plik != null && artykul.Plik.ContentLength > 0)
                {
                    var fileName = Path.GetFileName(artykul.Plik.FileName);
                    var path = Path.Combine(Server.MapPath("~/Pliki/"), fileName);
                    artykul.Plik.SaveAs(path);
                }
                */
-                /*
-            
 
-
-
-                if (Request.Files.Count > 0)
-                {
-                    var file = Request.Files[0];
-
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        var fileName = Path.GetFileName(file.FileName);
-                        var path = Path.Combine(Server.MapPath("~/Pliki/"), fileName);
-                        file.SaveAs(path);
-                        return View(artykul);
-                    }
-                }
-                */
             }
 
             return View(artykul);
         }
 
         // GET: Artykuly/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Artykul artykul = db.Artykul.Find(id);
+            ArtykulyListViewModel artykul = artykulyRepo.GetArtykulyDetails(id);
+
             if (artykul == null)
             {
                 return HttpNotFound();
             }
-            return View(artykul);
+            return View(artykulyRepo.GetArtykulyDetails(id));
         }
 
         // POST: Artykuly/Edit/5
@@ -135,25 +109,25 @@ namespace Sklep.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id_towaru,Nazwa,Ilosc,Jednostka,Opis,Zdjecie")] Artykul artykul)
+        public ActionResult Edit(ArtykulyListViewModel artykul)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(artykul).State = EntityState.Modified;
-                db.SaveChanges();
+
+                artykulyRepo.EditArtykulyItem(artykul.Details.Id, artykul.Details.Name, artykul.Details.Describtion, artykul.Details.Quantity, artykul.Details.Unit, artykul.Details.File);
                 return RedirectToAction("Index");
             }
             return View(artykul);
         }
 
         // GET: Artykuly/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Artykul artykul = db.Artykul.Find(id);
+            ArtykulyListViewModel artykul = artykulyRepo.GetArtykulyDetails(id);
             if (artykul == null)
             {
                 return HttpNotFound();
@@ -166,9 +140,7 @@ namespace Sklep.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Artykul artykul = db.Artykul.Find(id);
-            db.Artykul.Remove(artykul);
-            db.SaveChanges();
+            artykulyRepo.DeleteArtykulyItem(id);
             return RedirectToAction("Index");
         }
 

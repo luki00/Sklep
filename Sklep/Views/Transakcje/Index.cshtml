@@ -41,9 +41,9 @@
         </td>
 
         <td>
-            @Html.ActionLink("Potwierdź", "Edit", new { id = item.ID_transakcji }) |
-            @Html.ActionLink("Wyświetl", "Details", new { id = item.ID_transakcji }) |
-            @Html.ActionLink("Anuluj", "Delete", new { id = item.ID_transakcji })
+            @Html.ActionLink("Potwierdź", "Edit", new { id = item.ID_transakcji }, new { @class = "btn btn-secondary" }) 
+            @Html.ActionLink("Wyświetl", "Details", new { id = item.ID_transakcji }, new { @class = "btn btn-secondary" }) 
+            @Html.ActionLink("Anuluj", "Delete", new { id = item.ID_transakcji }, new { @class = "btn btn-secondary" })
         </td>
     </tr>
 }

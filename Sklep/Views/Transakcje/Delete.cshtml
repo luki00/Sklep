@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Html.ActionLink("Wróć do koszyka", "Index")
 <h2>Anuluj</h2>
 @if (ViewBag.Potwierdzono)
 {
@@ -12,7 +13,7 @@
     <h3>Nie można anulować transakcji, ponieważ została ona potwierdzona.</h3>
 
     <div class="form-actions no-color">
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Wróć do koszyka", "Index")
     </div>
 }
 else
@@ -46,14 +47,6 @@ else
                 @Html.DisplayFor(model => model.Utworzono)
             </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Potwierdzono)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Potwierdzono)
-            </dd>
-
         </dl>
 
         @using (Html.BeginForm())
@@ -61,8 +54,7 @@ else
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
+                <input type="submit" value="Anuluj" class="btn btn-secondary" />
             </div>
 
         }

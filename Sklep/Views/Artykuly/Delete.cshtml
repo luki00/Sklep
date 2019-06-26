@@ -1,65 +1,74 @@
-﻿@model Sklep.Models.Artykul
+﻿@model Sklep.ViewModels.ArtykulyListViewModel
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Usuń</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Czy na pewno chcesz usunąć towar?</h3>
 <div>
-    <h4>Artykul</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Nazwa)
+            @Html.DisplayNameFor(model => model.Details.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Nazwa)
+            @Html.DisplayFor(model => model.Details.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Ilosc)
+            @Html.DisplayNameFor(model => model.Details.Quantity)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ilosc)
+            @Html.DisplayFor(model => model.Details.Quantity)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Jednostka)
+            @Html.DisplayNameFor(model => model.Details.Unit)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Jednostka)
+            @Html.DisplayFor(model => model.Details.Unit)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Opis)
+            @Html.DisplayNameFor(model => model.Details.Describtion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Opis)
+            @Html.DisplayFor(model => model.Details.Describtion)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Zdjecie)
+            @Html.DisplayNameFor(model => model.Details.Photo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Zdjecie)
+            <h2 align="center">
+                @if (Model.Details.Photo != null)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.Details.Photo)" />
+                }
+                else
+                {
+                    <img src="/Pliki/image_404.png" alt="" />
+                }
+            </h2>
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Usuń" class="btn btn-secondary" /> |
+            @Html.ActionLink("Wróć", "Index")
         </div>
     }
 </div>

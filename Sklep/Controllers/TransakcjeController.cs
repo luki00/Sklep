@@ -40,7 +40,17 @@ namespace Sklep.Controllers
         // GET: Transakcje/Create
         public ActionResult Create(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             ViewBag.ID = id;
+            Artykul Artykul = db.Artykul.Find(id);
+            if (Artykul == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.max = Artykul.Ilosc;
             ViewBag.ArtykulID = new SelectList(db.Artykul, "Id_towaru", "Nazwa");
             return View();
         }
