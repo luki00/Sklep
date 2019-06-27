@@ -44,27 +44,29 @@ namespace Sklep.Repos
 
 
 
-        public bool SetArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo)
+        //public bool SetArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo)
+        public bool SetArtykulyItem(ArtykulyListViewModel artykul)
         {
             try
             {
+
                 Artykul art = new Artykul() {
-                Id_towaru = id,
-                Nazwa = Name,
-                Ilosc = Quantity,
-                Jednostka = Unit,
-                Opis = Describtion
-            };
+                Id_towaru = artykul.Details.Id,
+                Nazwa = artykul.Details.Name,
+                Ilosc = artykul.Details.Quantity,
+                Jednostka = artykul.Details.Unit,
+                Opis = artykul.Details.Describtion
+                };
 
             
                 byte[] bytes;
 
-            if (Photo != null && Photo.ContentLength > 0)
+            if (artykul.Details.File != null && artykul.Details.File.ContentLength > 0)
             {
 
-                using (BinaryReader br = new BinaryReader(Photo.InputStream))
+                using (BinaryReader br = new BinaryReader(artykul.Details.File.InputStream))
                 {
-                    bytes = br.ReadBytes(Photo.ContentLength);
+                    bytes = br.ReadBytes(artykul.Details.File.ContentLength);
                 }
                 art.Zdjecie = bytes;
             }
@@ -79,26 +81,27 @@ namespace Sklep.Repos
         }
 
 
-        public bool EditArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo)
+        //public bool EditArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo)
+        public bool EditArtykulyItem(ArtykulyListViewModel artykul)
         {
             bool a = false;
             byte[] bytes;
 
             
-            Artykul art = db.Artykul.Find(id);
-            art.Nazwa = Name;
-            art.Ilosc = Quantity;
-            art.Jednostka = Unit;
-            art.Opis = Describtion;
+            Artykul art = db.Artykul.Find(artykul.Details.Id);
+            art.Nazwa = artykul.Details.Name;
+            art.Ilosc = artykul.Details.Quantity;
+            art.Jednostka = artykul.Details.Unit;
+            art.Opis = artykul.Details.Describtion;
 
             //throw new HttpException(404, "error");
-            
-            if (Photo != null && Photo.ContentLength > 0)
+
+            if (artykul.Details.File != null && artykul.Details.File.ContentLength > 0)
             {
 
-                using (BinaryReader br = new BinaryReader(Photo.InputStream))
+                using (BinaryReader br = new BinaryReader(artykul.Details.File.InputStream))
                 {
-                    bytes = br.ReadBytes(Photo.ContentLength);
+                    bytes = br.ReadBytes(artykul.Details.File.ContentLength);
                 }
                 art.Zdjecie = bytes;
             }

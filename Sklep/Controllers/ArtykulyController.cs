@@ -59,14 +59,14 @@ namespace Sklep.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id_towaru,Nazwa,Ilosc,Jednostka,Opis,Zdjecie,Plik")] Artykul artykul)
+        public ActionResult Create(ArtykulyListViewModel artykul)
         {
             
             if (ModelState.IsValid)
             {
 
-                artykulyRepo.SetArtykulyItem(artykul.Id_towaru,artykul.Nazwa,artykul.Opis,artykul.Ilosc,artykul.Jednostka,artykul.Plik);
-
+                //artykulyRepo.SetArtykulyItem(artykul.Details.Id,artykul.Details.Name,artykul.Details.Describtion,artykul.Details.Quantity,artykul.Details.Unit,artykul.Details.File);
+                artykulyRepo.SetArtykulyItem(artykul);
                 return RedirectToAction("Index");
 
 
@@ -114,7 +114,8 @@ namespace Sklep.Controllers
             if (ModelState.IsValid)
             {
 
-                artykulyRepo.EditArtykulyItem(artykul.Details.Id, artykul.Details.Name, artykul.Details.Describtion, artykul.Details.Quantity, artykul.Details.Unit, artykul.Details.File);
+                //artykulyRepo.EditArtykulyItem(artykul.Details.Id, artykul.Details.Name, artykul.Details.Describtion, artykul.Details.Quantity, artykul.Details.Unit, artykul.Details.File);
+                artykulyRepo.EditArtykulyItem(artykul);
                 return RedirectToAction("Index");
             }
             return View(artykul);

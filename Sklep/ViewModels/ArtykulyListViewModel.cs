@@ -10,7 +10,6 @@ namespace Sklep.ViewModels
     {
         public List<ArtykulyListItemViewModel> List { get; set; }
         public ArtykulyDetailsViewModel Details { get; set; }
-        public ArtykulyDetailsViewModel Get { get; set; }
 
     }
 
@@ -41,19 +40,6 @@ namespace Sklep.ViewModels
     }
 
 
-    public class ArtykulyViewModel
-    {
-        [Display(Name = "Nazwa")]
-        public string Name { get; set; }
-        [Display(Name = "Zdjecie")]
-        public HttpPostedFileBase Photo { get; set; }
-        [Display(Name = "Opis")]
-        public string Describtion { get; set; }
-        [Display(Name = "Ilość")]
-        public int Quantity { get; set; }
-        [Display(Name = "Jednostka")]
-        public Sklep.Models.jednostka Unit { get; set; }
-        public int Id { get; set; }
-    }
+
 
 }

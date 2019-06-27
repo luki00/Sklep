@@ -1,4 +1,4 @@
-﻿@model Sklep.Models.Transakcja
+﻿@model Sklep.ViewModels.TransakcjeListViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,39 +11,39 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Artykul.Nazwa)
+            @Html.DisplayNameFor(model => model.Details.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Artykul.Nazwa)
+            @Html.DisplayFor(model => model.Details.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Ilosc)
+            @Html.DisplayNameFor(model => model.Details.Quantity)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ilosc)
+            @Html.DisplayFor(model => model.Details.Quantity)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Utworzono)
+            @Html.DisplayNameFor(model => model.Details.Created)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Utworzono)
+            @Html.DisplayFor(model => model.Details.Created)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Potwierdzono)
+            @Html.DisplayNameFor(model => model.Details.Accepted)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Potwierdzono)
+            @Html.DisplayFor(model => model.Details.Accepted)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Potwierdź zakup", "Edit", new { id = Model.ID_transakcji }, new { @class = "btn btn-secondary" })
+    @Html.ActionLink("Potwierdź zakup", "Edit", new { id = Model.Details.Id }, new { @class = "btn btn-secondary" })
 </p>

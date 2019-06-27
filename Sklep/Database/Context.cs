@@ -10,7 +10,7 @@ namespace Sklep.Database
     public class Context : DbContext
     {
         public DbSet<Artykul> Artykul { get; set; }
-        public DbSet<Transakcja> Transkacja { get; set; }
+        public DbSet<Transakcja> Transakcja { get; set; }
 
         //public System.Data.Entity.DbSet<Sklep.Models.Plik> Pliks { get; set; }
     }

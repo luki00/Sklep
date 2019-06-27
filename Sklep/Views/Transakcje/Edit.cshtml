@@ -1,4 +1,4 @@
-﻿@model Sklep.Models.Transakcja
+﻿@model Sklep.ViewModels.TransakcjeListViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -16,21 +16,21 @@
 
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID_transakcji)
+        @Html.HiddenFor(model => model.Details.Id)
 
 
 
         <div class="form-group">
-            @Html.DisplayNameFor(model => model.Artykul.Nazwa)
+            @Html.DisplayNameFor(model => model.Details.Name)
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.Artykul.Nazwa)
+                @Html.DisplayFor(model => model.Details.Name)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.DisplayNameFor(model => model.Ilosc)
+            @Html.DisplayNameFor(model => model.Details.Quantity)
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.Ilosc)
+                @Html.DisplayFor(model => model.Details.Quantity) @Html.DisplayFor(model => model.Details.Unit)
             </div>
         </div>
 

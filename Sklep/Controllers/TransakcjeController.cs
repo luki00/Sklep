@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Sklep.Database;
 using Sklep.Models;
+using Sklep.Repos;
+using Sklep.ViewModels;
 
 namespace Sklep.Controllers
 {
@@ -15,21 +17,31 @@ namespace Sklep.Controllers
     {
         private Context db = new Context();
 
+        ITransakcjeRepo transakcjeRepo;
+
+        public TransakcjeController()
+        {
+            transakcjeRepo = new TransakcjeRepo();
+        }
+
+
         // GET: Transakcje
         public ActionResult Index()
         {
-            var transkacja = db.Transkacja.Include(t => t.Artykul);
-            return View(transkacja.ToList());
+            //var transkacja = db.Transakcja.Include(t => t.Artykul);
+            return View(transakcjeRepo.GetTransakcjeList());
         }
 
         // GET: Transakcje/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Transakcja transakcja = db.Transkacja.Find(id);
+            TransakcjeListViewModel transakcja = transakcjeRepo.GetTransakcjeDetails(id);
+
+
             if (transakcja == null)
             {
                 return HttpNotFound();
@@ -38,21 +50,20 @@ namespace Sklep.Controllers
         }
 
         // GET: Transakcje/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ViewBag.ID = id;
-            Artykul Artykul = db.Artykul.Find(id);
+            
+            TransakcjeListViewModel Artykul = transakcjeRepo.GetTransakcje(id);
             if (Artykul == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.max = Artykul.Ilosc;
-            ViewBag.ArtykulID = new SelectList(db.Artykul, "Id_towaru", "Nazwa");
-            return View();
+
+            return View(Artykul);
         }
 
         // POST: Transakcje/Create
@@ -60,40 +71,29 @@ namespace Sklep.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_transakcji,Ilosc")] Transakcja transakcja, int Id)
+        public ActionResult Create(TransakcjeListViewModel transakcja)
         {
             if (ModelState.IsValid)
             {
-                var transakcja2 = new Transakcja();
-
-                transakcja2.ID_transakcji = transakcja.ID_transakcji;
-                transakcja2.Ilosc = transakcja.Ilosc;
-                transakcja2.Utworzono = DateTime.Now;
-                transakcja2.Potwierdzono = false;
-                transakcja2.ArtykulID = Id;
-
-                db.Transkacja.Add(transakcja2);
-                db.SaveChanges();
+                
+                transakcjeRepo.SetTransakcje(transakcja.Accept.Id, transakcja.Accept.Quantity);
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ArtykulID = new SelectList(db.Artykul, "Id_towaru", "Nazwa", transakcja.ArtykulID);
             return View(transakcja);
         }
 
         // GET: Transakcje/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Transakcja transakcja = db.Transkacja.Find(id);
+            TransakcjeListViewModel transakcja = transakcjeRepo.GetTransakcjeAccept(id);
             if (transakcja == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ArtykulID = new SelectList(db.Artykul, "Id_towaru", "Nazwa", transakcja.ArtykulID);
             return View(transakcja);
         }
 
@@ -102,48 +102,30 @@ namespace Sklep.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_transakcji")] Transakcja transakcja)
+        public ActionResult Edit(TransakcjeListItemViewModel transakcja)
         {
             if (ModelState.IsValid)
             {
-                Transakcja transakcja2 = db.Transkacja.Find(transakcja.ID_transakcji);
-                transakcja2.Potwierdzono = true;
-
-                if (TryUpdateModel(transakcja2))
-                {
-                    try
-                    {
-                        db.SaveChanges();
-
-                        return RedirectToAction("Index");
-                    }
-                    catch (DataException)
-                    {
-                    }
-                }
-
-                //db.Entry(transakcja).State = transakcja2;
-                db.SaveChanges();
+                transakcjeRepo.SetTransakcjeAccept(transakcja.Id);
                 return RedirectToAction("Index");
             }
-            ViewBag.ArtykulID = new SelectList(db.Artykul, "Id_towaru", "Nazwa", transakcja.ArtykulID);
             return View(transakcja);
         }
 
         // GET: Transakcje/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Transakcja transakcja = db.Transkacja.Find(id);
+            TransakcjeListViewModel transakcja = transakcjeRepo.GetTransakcjeDetails(id);
             if (transakcja == null)
             {
                 return HttpNotFound();
             }
 
-            if (transakcja.Potwierdzono)
+            if (transakcja.Details.Accepted)
             {
                 ViewBag.Potwierdzono = true;
                 return View();
@@ -162,9 +144,7 @@ namespace Sklep.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Transakcja transakcja = db.Transkacja.Find(id);
-            db.Transkacja.Remove(transakcja);
-            db.SaveChanges();
+            transakcjeRepo.DeleteTransakcje(id);
             return RedirectToAction("Index");
         }
 

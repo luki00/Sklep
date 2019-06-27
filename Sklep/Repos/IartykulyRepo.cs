@@ -10,8 +10,11 @@ namespace Sklep.Repos
     {
         ArtykulyListViewModel GetArtykulyList();
         ArtykulyListViewModel GetArtykulyDetails(int id);
-        bool SetArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo);
         bool DeleteArtykulyItem(int id);
-        bool EditArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo);
+        bool SetArtykulyItem(ArtykulyListViewModel artykul);
+        bool EditArtykulyItem(ArtykulyListViewModel artykul);
+
+        //bool SetArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo);
+        //bool EditArtykulyItem(int id, string Name, string Describtion, int Quantity, Sklep.Models.jednostka Unit, HttpPostedFileBase Photo);
     }
 }
